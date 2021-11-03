@@ -1,30 +1,30 @@
-package Person;
+package Model;
 
-import Model.Kurs;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Lehrer extends Person{
+public class Lehrer extends Person {
 
     private List<Kurs> kurse;
-    private int ID;
+    private int lehrerID;
 
-    public Lehrer(String vorname, String nachname, List<Kurs> kurse, int ID) {
+    private static int ID = 0;
+
+    public Lehrer(String vorname, String nachname)
+    {
         super(vorname, nachname);
-        this.kurse = kurse;
-        this.ID = ID;
+        this.kurse = new ArrayList<>();
+        ID++;
+        this.lehrerID = ID;
     }
 
-    public Lehrer() {
+    public void setLehrerID(int lehrerID) {
+        this.lehrerID = lehrerID;
     }
 
     public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
+        return this.lehrerID;
     }
 
     public List<Kurs> getKurse() {
@@ -53,6 +53,11 @@ public class Lehrer extends Person{
     @Override
     public int hashCode() {
         return Objects.hash(kurse);
+    }
+
+    public void addKurs(Kurs kurs)
+    {
+        this.kurse.add(kurs);
     }
 
     public void loschenKurs(Kurs kurs)

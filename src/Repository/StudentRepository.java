@@ -1,9 +1,6 @@
 package Repository;
 
-import Model.Kurs;
-import Person.Student;
-
-import java.util.Objects;
+import Model.Student;
 
 public class StudentRepository extends InMemoryRepository<Student> {
 
@@ -24,5 +21,12 @@ public class StudentRepository extends InMemoryRepository<Student> {
         studentToUpdate.setAngeschriebeneKurse(obj.getAngeschriebeneKurse());
 
         return studentToUpdate;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentRepository{" +
+                "repoList=" + repoList +
+                '}';
     }
 }

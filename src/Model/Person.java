@@ -1,4 +1,4 @@
-package Person;
+package Model;
 
 public class Person {
 
@@ -11,6 +11,8 @@ public class Person {
     }
 
     public Person() {
+        this.vorname = "";
+        this.nachname = "";
     }
 
     public String getVorname() {

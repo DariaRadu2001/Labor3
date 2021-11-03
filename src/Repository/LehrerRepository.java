@@ -1,8 +1,5 @@
 package Repository;
-import Person.Lehrer;
-import Person.Student;
-
-import java.util.List;
+import Model.Lehrer;
 
 public class LehrerRepository extends InMemoryRepository<Lehrer>{
 

@@ -1,13 +1,10 @@
 package Repository;
 
 import Model.Kurs;
-import Person.Lehrer;
-import Person.Student;
+import Model.Lehrer;
+import Model.Student;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class RegisterSchema {
 
@@ -20,15 +17,35 @@ public class RegisterSchema {
         if(!kursRepo.repoList.contains(kurs))
             return false;
 
-        if((kurs.getListeStudenten().size() < kurs.getMaximaleAnzahlStudenten()) && (student.getTotalKredits() + kurs.getEcts() <= 30))
+        if(student.getAngeschriebeneKurse().contains(kurs))
         {
-            student.getAngeschriebeneKurse().add(kurs);
-            kurs.getListeStudenten().add(student);
-            return true;
+            return false;
         }
         else
-            return false;
+        {
+            if((kurs.frei() && (student.notwendigeKredits() >= kurs.getEcts())))
+            {
+                student.enrolled(kurs);
+                kurs.addStudent(student);
+                return true;
+            }
+            else
+                return false;
+        }
 
+    }
+
+    public Map<Kurs, Integer> kurseFreiePlatzenUndAnzahl()
+    {
+        Map<Kurs, Integer> mapFreieKurse = new HashMap<>();
+        for(Kurs kurs : kursRepo.repoList)
+        {
+            if(kurs.frei())
+            {
+                mapFreieKurse.put(kurs,kurs.anzahlFreienPlatze());
+            }
+        }
+        return mapFreieKurse;
     }
 
     public List<Kurs> kurseFreiePlatzen()
@@ -36,7 +53,7 @@ public class RegisterSchema {
         List<Kurs> freieKurse = new ArrayList<>();
         for(Kurs kurs : kursRepo.repoList)
         {
-            if(kurs.getListeStudenten().size() < kurs.getMaximaleAnzahlStudenten())
+            if(kurs.frei())
             {
                 freieKurse.add(kurs);
             }
@@ -50,9 +67,9 @@ public class RegisterSchema {
         for(Student student : studentenRepo.repoList)
         {
             List<Kurs> kurseStudent = student.getAngeschriebeneKurse();
-            for(Kurs kurse : kurseStudent)
+            for(Kurs course : kurseStudent)
             {
-                if(Objects.equals(kurse.getName(), kurs.getName()))
+                if(Objects.equals(course.getName(), kurs.getName()))
                 {
                     studentenAngemeldet.add(student);
                     break;
@@ -62,7 +79,7 @@ public class RegisterSchema {
         return studentenAngemeldet;
     }
 
-    public List<Kurs> verfügbareKurse()
+    public List<Kurs> verfugbareKurse()
     {
         return kursRepo.getAll();
     }
@@ -93,11 +110,10 @@ public class RegisterSchema {
             {
                 System.out.println("Sie haben den Name des Kurses falsch geschrieben. ");
             }
-
         }
     }
 
-    public void löschenKurs(Lehrer lehrer, Kurs kurs)
+    public void loschenKurs(Lehrer lehrer, Kurs kurs)
     {
         lehrer.loschenKurs(kurs);
         for(Student student : studentenRepo.repoList)
@@ -131,12 +147,5 @@ public class RegisterSchema {
 
         }
     }
-
-
-
-
-
-
-
 
 }

@@ -1,28 +1,24 @@
 package Model;
 
-import Person.Lehrer;
-import Person.Student;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Kurs {
     private String name;
-    private Lehrer lehrer;
+    private Person lehrer;
     private int maximaleAnzahlStudenten;
     private List<Student> listeStudenten;
     private int ects;
 
-    public Kurs(String name, Lehrer lehrer, int maximaleAnzahlStudenten, List<Student> listeStudenten, int ects) {
+    public Kurs(String name, Person lehrer, int maximaleAnzahlStudenten, int ects) {
         this.name = name;
         this.lehrer = lehrer;
         this.maximaleAnzahlStudenten = maximaleAnzahlStudenten;
-        this.listeStudenten = listeStudenten;
+        this.listeStudenten = new ArrayList<>();
         this.ects = ects;
     }
 
-    public Kurs() {
-    }
 
     public String getName() {
         return name;
@@ -32,11 +28,11 @@ public class Kurs {
         this.name = name;
     }
 
-    public Lehrer getLehrer() {
+    public Person getLehrer() {
         return lehrer;
     }
 
-    public void setLehrer(Lehrer lehrer) {
+    public void setLehrer(Person lehrer) {
         this.lehrer = lehrer;
     }
 
@@ -86,5 +82,20 @@ public class Kurs {
     @Override
     public int hashCode() {
         return Objects.hash(name, lehrer, maximaleAnzahlStudenten, listeStudenten, ects);
+    }
+
+    public boolean frei()
+    {
+        return this.getListeStudenten().size() < this.getMaximaleAnzahlStudenten();
+    }
+
+    public void addStudent(Student student)
+    {
+        this.listeStudenten.add(student);
+    }
+
+    public int anzahlFreienPlatze()
+    {
+        return (this.getMaximaleAnzahlStudenten() - this.getListeStudenten().size());
     }
 }

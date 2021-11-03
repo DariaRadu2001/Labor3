@@ -1,7 +1,6 @@
-package Person;
+package Model;
 
-import Model.Kurs;
-
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -16,18 +15,9 @@ public class Student extends Person {
         super(vorname, nachname);
         this.studentID = studentID;
         this.totalKredits = 0;
-        this.angeschriebeneKurse = new LinkedList<Kurs>();
+        this.angeschriebeneKurse = new ArrayList<>();
     }
 
-    public Student(String vorname, String nachname, long studentID, int totalKredits, List<Kurs> angeschriebeneKurse) {
-        super(vorname, nachname);
-        this.studentID = studentID;
-        this.totalKredits = totalKredits;
-        this.angeschriebeneKurse = angeschriebeneKurse;
-    }
-
-    public Student() {
-    }
 
     public long getStudentID() {
         return studentID;
@@ -78,5 +68,16 @@ public class Student extends Person {
     public void loschenKurs(Kurs kurs)
     {
         this.angeschriebeneKurse.remove(kurs);
+    }
+
+    public int notwendigeKredits()
+    {
+        return (30 - this.getTotalKredits());
+    }
+
+    public void enrolled(Kurs kurs)
+    {
+        this.angeschriebeneKurse.add(kurs);
+        this.totalKredits += kurs.getEcts();
     }
 }

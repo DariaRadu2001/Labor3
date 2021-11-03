@@ -11,6 +11,13 @@ public class KursRepository extends InMemoryRepository<Kurs>{
     }
 
     @Override
+    public String toString() {
+        return "KursRepository{" +
+                "repoList=" + repoList +
+                '}';
+    }
+
+    @Override
     public Kurs update(Kurs obj) {
         Kurs kursToUpdate = this.repoList.stream()
                 .filter(kurs -> Objects.equals(kurs.getName(), obj.getName()))
