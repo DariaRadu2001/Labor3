@@ -1,5 +1,6 @@
 package Model;
 
+import Person.Lehrer;
 import Person.Student;
 
 import java.util.List;
@@ -7,12 +8,14 @@ import java.util.Objects;
 
 public class Kurs {
     private String name;
+    private Lehrer lehrer;
     private int maximaleAnzahlStudenten;
     private List<Student> listeStudenten;
     private int ects;
 
-    public Kurs(String name, int maximaleAnzahlStudenten, List<Student> listeStudenten, int ects) {
+    public Kurs(String name, Lehrer lehrer, int maximaleAnzahlStudenten, List<Student> listeStudenten, int ects) {
         this.name = name;
+        this.lehrer = lehrer;
         this.maximaleAnzahlStudenten = maximaleAnzahlStudenten;
         this.listeStudenten = listeStudenten;
         this.ects = ects;
@@ -27,6 +30,14 @@ public class Kurs {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Lehrer getLehrer() {
+        return lehrer;
+    }
+
+    public void setLehrer(Lehrer lehrer) {
+        this.lehrer = lehrer;
     }
 
     public int getMaximaleAnzahlStudenten() {
@@ -57,6 +68,7 @@ public class Kurs {
     public String toString() {
         return "Kurs{" +
                 "name='" + name + '\'' +
+                ", lehrer=" + lehrer +
                 ", maximaleAnzahlStudenten=" + maximaleAnzahlStudenten +
                 ", listeStudenten=" + listeStudenten +
                 ", ects=" + ects +
@@ -68,11 +80,11 @@ public class Kurs {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Kurs kurs = (Kurs) o;
-        return maximaleAnzahlStudenten == kurs.maximaleAnzahlStudenten && ects == kurs.ects && name.equals(kurs.name) && listeStudenten.equals(kurs.listeStudenten);
+        return maximaleAnzahlStudenten == kurs.maximaleAnzahlStudenten && ects == kurs.ects && name.equals(kurs.name) && lehrer.equals(kurs.lehrer) && listeStudenten.equals(kurs.listeStudenten);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, maximaleAnzahlStudenten, listeStudenten, ects);
+        return Objects.hash(name, lehrer, maximaleAnzahlStudenten, listeStudenten, ects);
     }
 }
