@@ -9,14 +9,10 @@ public class Lehrer extends Person {
     private List<Kurs> kurse;
     private int lehrerID;
 
-    private static int ID = 0;
-
-    public Lehrer(String vorname, String nachname)
-    {
+    public Lehrer(String vorname, String nachname, int lehrerID) {
         super(vorname, nachname);
         this.kurse = new ArrayList<>();
-        ID++;
-        this.lehrerID = ID;
+        this.lehrerID = lehrerID;
     }
 
     public void setLehrerID(int lehrerID) {
@@ -36,23 +32,11 @@ public class Lehrer extends Person {
     }
 
     @Override
-    public String toString() {
-        return "Lehrer{" +
-                "kurse=" + kurse +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lehrer lehrer = (Lehrer) o;
-        return kurse.equals(lehrer.kurse);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(kurse);
+        return lehrerID == lehrer.lehrerID && Objects.equals(kurse, lehrer.kurse);
     }
 
     public void addKurs(Kurs kurs)
@@ -64,4 +48,26 @@ public class Lehrer extends Person {
     {
         this.kurse.remove(kurs);
     }
+
+    @Override
+    public String toString() {
+        return "Lehrer{" +
+                "kurse=" + this.getKursName() +
+                ", lehrerID=" + lehrerID +
+                ", Vorname=" + this.getVorname() +
+                ", Nachname=" + this.getNachname()+
+                '}';
+    }
+
+    public List<String> getKursName()
+    {
+        List<String> kurseNamen = new ArrayList<>();
+        for(Kurs kurs : this.kurse)
+        {
+            kurseNamen.add(kurs.getName());
+        }
+        return kurseNamen;
+    }
+
+
 }

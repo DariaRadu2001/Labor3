@@ -10,13 +10,17 @@ public class StudentRepository extends InMemoryRepository<Student> {
 
     @Override
     public Student update(Student obj) {
+
+        if(repoList.isEmpty())
+            throw  new IndexOutOfBoundsException("Die Liste ist leer");
+
         Student studentToUpdate = this.repoList.stream()
                 .filter(student -> student.getStudentID() == obj.getStudentID())
                 .findFirst()
                 .orElseThrow();
 
         studentToUpdate.setNachname(obj.getNachname());
-        studentToUpdate.setVorname(obj.getNachname());
+        studentToUpdate.setVorname(obj.getVorname());
         studentToUpdate.setTotalKredits(obj.getTotalKredits());
         studentToUpdate.setAngeschriebeneKurse(obj.getAngeschriebeneKurse());
 

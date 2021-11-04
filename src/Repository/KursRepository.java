@@ -19,6 +19,10 @@ public class KursRepository extends InMemoryRepository<Kurs>{
 
     @Override
     public Kurs update(Kurs obj) {
+
+        if(repoList.isEmpty())
+            throw  new IndexOutOfBoundsException("Die Liste ist leer");
+
         Kurs kursToUpdate = this.repoList.stream()
                 .filter(kurs -> Objects.equals(kurs.getName(), obj.getName()))
                 .findFirst()

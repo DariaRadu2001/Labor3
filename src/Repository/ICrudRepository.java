@@ -10,5 +10,5 @@ public interface ICrudRepository<T> {
 
     T update(T obj);
 
-    void delete(T obj);
+    void delete(T obj) throws IllegalAccessException;
 }

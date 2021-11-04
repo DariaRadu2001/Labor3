@@ -44,13 +44,31 @@ public class Student extends Person {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(studentID, totalKredits, angeschriebeneKurse);
+    }
+
+    @Override
     public String toString() {
         return "Student{" +
                 "studentID=" + studentID +
+                ",Vorname=" + this.getVorname() +
+                ",Nachname=" + this.getNachname() +
                 ", totalKredits=" + totalKredits +
-                ", angeschriebeneKurse=" + angeschriebeneKurse +
+                ", angeschriebeneKurse=" + this .getKursName() +
                 '}';
     }
+
+    public List<String> getKursName()
+    {
+        List<String> kurseNamen = new ArrayList<>();
+        for(Kurs kurs : this.angeschriebeneKurse)
+        {
+            kurseNamen.add(kurs.getName());
+        }
+        return kurseNamen;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -58,11 +76,6 @@ public class Student extends Person {
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
         return studentID == student.studentID && totalKredits == student.totalKredits && angeschriebeneKurse.equals(student.angeschriebeneKurse);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(studentID, totalKredits, angeschriebeneKurse);
     }
 
     public void loschenKurs(Kurs kurs)
@@ -79,5 +92,14 @@ public class Student extends Person {
     {
         this.angeschriebeneKurse.add(kurs);
         this.totalKredits += kurs.getEcts();
+    }
+
+    public void showKurse()
+    {
+        System.out.println(this.getStudentID() + ":");
+        for(Kurs kurs : angeschriebeneKurse)
+        {
+            System.out.println(kurs.toString2());
+        }
     }
 }

@@ -8,9 +8,15 @@ import java.util.*;
 
 public class RegisterSchema {
 
-    LehrerRepository lehrerRepo;
-    KursRepository kursRepo;
-    StudentRepository studentenRepo;
+    private LehrerRepository lehrerRepo;
+    private KursRepository kursRepo;
+    private StudentRepository studentenRepo;
+
+    public RegisterSchema(LehrerRepository lehrerRepo, KursRepository kursRepo, StudentRepository studentenRepo) {
+        this.lehrerRepo = lehrerRepo;
+        this.kursRepo = kursRepo;
+        this.studentenRepo = studentenRepo;
+    }
 
     public boolean register(Kurs kurs, Student student)
     {
@@ -27,6 +33,7 @@ public class RegisterSchema {
             {
                 student.enrolled(kurs);
                 kurs.addStudent(student);
+
                 return true;
             }
             else
