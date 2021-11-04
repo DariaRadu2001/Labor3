@@ -8,6 +8,12 @@ public class LehrerRepository extends InMemoryRepository<Lehrer>{
         super();
     }
 
+    /**
+     * ich andere die Attribute eines Lehrers, wenn die Liste leer ist oder der Lehrer nicht in der Liste ist → Exception
+     * @param obj, der Lehrer, den ich andern will
+     * @return der neue Lehrer
+     * @throws IndexOutOfBoundsException
+     */
     @Override
     public Lehrer update(Lehrer obj) {
 

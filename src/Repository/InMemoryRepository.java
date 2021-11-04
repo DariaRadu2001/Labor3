@@ -8,11 +8,20 @@ public abstract class InMemoryRepository<T> implements ICrudRepository<T> {
 
     protected List<T> repoList;
 
+    /**
+     * ich erstelle ein leeres ArrayList fur dem Repo
+     */
     public InMemoryRepository() {
         this.repoList = new ArrayList<>();
 
     }
 
+    /**
+     * Ich lege ein Objekt in dem Repo hinzu. Wenn das Objekt in der Liste ist → Exception
+     * @param obj
+     * @return das Objekt das ich in dem repoListe hinzugefügt habe
+     * @throws IndexOutOfBoundsException
+     */
     @Override
     public T create(T obj) {
         if(repoList.contains(obj))
@@ -22,6 +31,11 @@ public abstract class InMemoryRepository<T> implements ICrudRepository<T> {
         return obj;
     }
 
+    /**
+     * ich gebe die RepoListe zurück, wenn die Liste leer ist → Exception
+     * @return die repoListe
+     * @throws IndexOutOfBoundsException
+     */
     @Override
     public List<T> getAll() {
         if(repoList.isEmpty())
@@ -29,6 +43,11 @@ public abstract class InMemoryRepository<T> implements ICrudRepository<T> {
         return this.repoList;
     }
 
+    /**
+     * ich lösche ein Objekt aus der RepoListe, wenn das Objekt nicht existiert oder nicht in der Liste ist → Exception
+     * @param obj, das gelöschtes Objekt
+     * @throws IllegalAccessException
+     */
     @Override
     public void delete(T obj) throws IllegalAccessException {
 

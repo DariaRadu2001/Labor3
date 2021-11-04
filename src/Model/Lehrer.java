@@ -39,11 +39,19 @@ public class Lehrer extends Person {
         return lehrerID == lehrer.lehrerID && Objects.equals(kurse, lehrer.kurse);
     }
 
+    /**
+     * ein Kurs zu der Liste der unterrichteten Kurse eines Lehrers hinzufügen
+     * @param kurs
+     */
     public void addKurs(Kurs kurs)
     {
         this.kurse.add(kurs);
     }
 
+    /**
+     * ein Kurs von der Liste der unterrichteten Kurse eines Lehrers löschen
+     * @param kurs
+     */
     public void loschenKurs(Kurs kurs)
     {
         this.kurse.remove(kurs);
@@ -59,6 +67,10 @@ public class Lehrer extends Person {
                 '}';
     }
 
+    /**
+     * ich verwende diese Methode fur toString(), um die Liste der gerichteten Kurse nur als Name der Kurse anzuzeigen
+     * @return eine Liste mit Namen aller Kurse, die ein Lehrer unterrichtet
+     */
     public List<String> getKursName()
     {
         List<String> kurseNamen = new ArrayList<>();

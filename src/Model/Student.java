@@ -1,7 +1,6 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,10 +54,14 @@ public class Student extends Person {
                 ",Vorname=" + this.getVorname() +
                 ",Nachname=" + this.getNachname() +
                 ", totalKredits=" + totalKredits +
-                ", angeschriebeneKurse=" + this .getKursName() +
+                ", angeschriebeneKurse=" + this.getKursName() +
                 '}';
     }
 
+    /**
+     * ich verwende diese Methode fur toString(), um die Liste der angemeldeten Kurse nur als Name der Kurse anzuzeigen
+     * @return eine Liste mit den Namen aller Kurse, bei denen ein Student teilnimmt
+     */
     public List<String> getKursName()
     {
         List<String> kurseNamen = new ArrayList<>();
@@ -69,7 +72,6 @@ public class Student extends Person {
         return kurseNamen;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,23 +80,38 @@ public class Student extends Person {
         return studentID == student.studentID && totalKredits == student.totalKredits && angeschriebeneKurse.equals(student.angeschriebeneKurse);
     }
 
+    /**
+     * ich lösche einen Kurs aus der Liste eines Students und subtrahiere die Anzahl des Kurses ECTS von dem Anzahl derKredite des Students
+     * @param kurs
+     */
     public void loschenKurs(Kurs kurs)
     {
         this.angeschriebeneKurse.remove(kurs);
-        this.totalKredits -= kurs.getEcts();
+        this.totalKredits -= kurs.getECTS();
     }
 
+    /**
+     * ich berechne wv. Kredite ein Student noch braucht bis er insgesamt 30 hat
+     * @return Anzahl notwendigen Krediten
+     */
     public int notwendigeKredits()
     {
         return (30 - this.getTotalKredits());
     }
 
+    /**
+     * Wenn ein Student sich fur einen Kurs anmeldet, dann fuge ich den Kurs in seiner Liste und inkrementiere seine ECTS mit der Anzahl des Kurses ECTS
+     * @param kurs
+     */
     public void enrolled(Kurs kurs)
     {
         this.angeschriebeneKurse.add(kurs);
-        this.totalKredits += kurs.getEcts();
+        this.totalKredits += kurs.getECTS();
     }
 
+    /**
+     * Methode, um nur der Name der Kurse, in denen der Student angemeldet ist
+     */
     public void showKurse()
     {
         System.out.println(this.getStudentID() + ":");

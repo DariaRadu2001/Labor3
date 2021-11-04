@@ -2,21 +2,20 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Kurs {
     private String name;
     private Lehrer lehrer;
     private int maximaleAnzahlStudenten;
     private List<Student> listeStudenten;
-    private int ects;
+    private int ECTS;
 
-    public Kurs(String name, Lehrer lehrer, int maximaleAnzahlStudenten, int ects) {
+    public Kurs(String name, Lehrer lehrer, int maximaleAnzahlStudenten, int ECTS) {
         this.name = name;
         this.lehrer = lehrer;
         this.maximaleAnzahlStudenten = maximaleAnzahlStudenten;
         this.listeStudenten = new ArrayList<>();
-        this.ects = ects;
+        this.ECTS = ECTS;
     }
 
 
@@ -52,12 +51,12 @@ public class Kurs {
         this.listeStudenten = listeStudenten;
     }
 
-    public int getEcts() {
-        return ects;
+    public int getECTS() {
+        return ECTS;
     }
 
-    public void setEcts(int ects) {
-        this.ects = ects;
+    public void setECTS(int ECTS) {
+        this.ECTS = ECTS;
     }
 
     @Override
@@ -65,31 +64,34 @@ public class Kurs {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Kurs kurs = (Kurs) o;
-        return maximaleAnzahlStudenten == kurs.maximaleAnzahlStudenten && ects == kurs.ects && name.equals(kurs.name) && lehrer.equals(kurs.lehrer) && listeStudenten.equals(kurs.listeStudenten);
+        return maximaleAnzahlStudenten == kurs.maximaleAnzahlStudenten && ECTS == kurs.ECTS && name.equals(kurs.name) && lehrer.equals(kurs.lehrer) && listeStudenten.equals(kurs.listeStudenten);
     }
 
-
+    /**
+     * ich untersuche, ob ein Kurs freie Platzen hat
+     * @return true, wenn es noch Platzen gibt/ false, wenn es voll ist
+     */
     public boolean frei()
     {
         return this.getListeStudenten().size() < this.getMaximaleAnzahlStudenten();
     }
 
+    /**
+     * ich hinzufüge ein bestimmter Student in der Liste der angemeldeten Studenten
+     * @param student
+     */
     public void addStudent(Student student)
     {
         this.listeStudenten.add(student);
     }
 
+    /**
+     * ich berechne der Anzahl den freien Platzen fur dem Kurs
+     * @return Anzahl von freien Platzen
+     */
     public int anzahlFreienPlatze()
     {
         return (this.getMaximaleAnzahlStudenten() - this.getListeStudenten().size());
-    }
-
-    public void showStudenten()
-    {
-        for(Student student : listeStudenten)
-        {
-            System.out.println(student.getStudentID());
-        }
     }
 
     @Override
@@ -99,10 +101,14 @@ public class Kurs {
                 ", lehrer=" + lehrer.getNachname()+
                 ", maximaleAnzahlStudenten=" + maximaleAnzahlStudenten +
                 ", listeStudenten=" + this.getStudentenID() +
-                ", ECTS=" + ects +
+                ", ECTS=" + ECTS +
                 '}';
     }
 
+    /**
+     * Ich benutze es fur dem toString() Funktion, indem ich fur die Liste der Studenten nur die ID anzeige
+     * @return Liste von IDs der Studenten die zu dem Kurs angemeldet sind
+     */
     public List<Long> getStudentenID()
     {
         List<Long> studentenIDs = new ArrayList<>();
@@ -114,6 +120,10 @@ public class Kurs {
         return studentenIDs;
     }
 
+    /**
+     * ich will nur den Namen des Kurses anzeigen
+     * @return String mit dem Namen des Kurses
+     */
     public String toString2() {
         return "Kurs{" +
                 "name='" + name + "'"+

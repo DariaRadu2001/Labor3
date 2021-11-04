@@ -8,6 +8,12 @@ public class StudentRepository extends InMemoryRepository<Student> {
         super();
     }
 
+    /**
+     * ich andere die Attribute eines Studenten, wenn die Liste leer ist oder der Student nicht in der Liste ist → Exception
+     * @param obj, der Student, den ich andern will
+     * @return der neue Student
+     * @throws IndexOutOfBoundsException
+     */
     @Override
     public Student update(Student obj) {
 

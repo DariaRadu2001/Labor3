@@ -17,6 +17,12 @@ public class KursRepository extends InMemoryRepository<Kurs>{
                 '}';
     }
 
+    /**
+     * ich andere die Attribute eines Kurses, wenn die Liste leer ist oder der Kurs nicht in der Liste ist → Exception
+     * @param obj, der Kurs, den ich andern will
+     * @return der neue Kurs
+     * @throws IndexOutOfBoundsException
+     */
     @Override
     public Kurs update(Kurs obj) {
 
@@ -29,9 +35,9 @@ public class KursRepository extends InMemoryRepository<Kurs>{
                 .orElseThrow();
 
         kursToUpdate.setLehrer(obj.getLehrer());
-        kursToUpdate.setEcts(obj.getEcts());
+        kursToUpdate.setECTS(obj.getECTS());
         kursToUpdate.setMaximaleAnzahlStudenten(obj.getMaximaleAnzahlStudenten());
-        kursToUpdate.setEcts(obj.getEcts());
+        kursToUpdate.setECTS(obj.getECTS());
         kursToUpdate.setListeStudenten(obj.getListeStudenten());
 
         return kursToUpdate;
