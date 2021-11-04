@@ -9,6 +9,8 @@ import Repository.LehrerRepository;
 import Repository.RegisterSchema;
 import Repository.StudentRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -23,8 +25,6 @@ public class Main {
         repoStudenten.create(ana);
         repoStudenten.create(daria);
         repoStudenten.create(mark);
-
-        //System.out.println(repoStudenten.toString());
 
         Lehrer pop = new Lehrer("Marcel", "Pop",1);
         Lehrer dancu = new Lehrer("Ingrid","Dancu",2);
@@ -46,32 +46,35 @@ public class Main {
         repoLehrer.create(dancu);
         repoLehrer.create(badiu);
 
-        //System.out.println(repoLehrer.toString());
-
         KursRepository repoKurse = new KursRepository();
         repoKurse.create(algebra);
         repoKurse.create(dataBase);
         repoKurse.create(map);
         repoKurse.create(fp);
 
-        System.out.println(fp.toString());
-        //System.out.println(repoKurse.toString());
-
         RegisterSchema registru = new RegisterSchema(repoLehrer, repoKurse, repoStudenten);
 
         registru.register(algebra, daria);
         registru.register(dataBase, daria);
-        registru.register(fp,ana);
         registru.register(map,daria);
-        System.out.println(ana);
+        registru.register(fp,ana);
+        registru.register(map,ana);
+
         daria.showKurse();
-        System.out.println(daria.toString());
 
+        System.out.println(registru.kurseFreiePlatzenUndAnzahl());
+        System.out.println(registru.kurseFreiePlatzen());
+        System.out.println("1 "+registru.studentenAngemeldetBestimmtenKurs(map));
+        System.out.println("2 "+registru.studentenAngemeldetBestimmtenKurs(fp));
+        System.out.println("3 "+registru.studentenAngemeldetBestimmtenKurs(dataBase));
 
+        assert(!registru.loschenKurs(dancu, fp));
+        registru.loschenKurs(dancu, map);
+        daria.showKurse();
+        System.out.println(daria.getTotalKredits());
 
-        Map<Kurs,Integer> mapFreieKurse = registru.kurseFreiePlatzenUndAnzahl();
-        //System.out.println(mapFreieKurse);
-
-
+        registru.andernECTS(10,algebra);
+        System.out.println(algebra);
+        System.out.println(daria.getTotalKredits());
     }
 }

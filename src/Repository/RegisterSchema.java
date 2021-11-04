@@ -120,8 +120,11 @@ public class RegisterSchema {
         }
     }
 
-    public void loschenKurs(Lehrer lehrer, Kurs kurs)
+    public boolean loschenKurs(Lehrer lehrer, Kurs kurs)
     {
+        if(!lehrer.getKurse().contains(kurs))
+            return false;
+            //throw new IllegalArgumentException("Der Lehrer unterrichtet das Kurs nicht.");
         lehrer.loschenKurs(kurs);
         for(Student student : studentenRepo.repoList)
         {
@@ -130,6 +133,7 @@ public class RegisterSchema {
                 student.loschenKurs(kurs);
             }
         }
+        return true;
     }
 
     public void andernECTS(int ECTS, Kurs kurs)

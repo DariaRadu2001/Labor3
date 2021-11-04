@@ -81,6 +81,7 @@ public class Student extends Person {
     public void loschenKurs(Kurs kurs)
     {
         this.angeschriebeneKurse.remove(kurs);
+        this.totalKredits -= kurs.getEcts();
     }
 
     public int notwendigeKredits()
