@@ -10,26 +10,54 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class KursRepositoryTest {
 
+    Lehrer pop;
+    Lehrer dancu;
+    Kurs algebra;
+    Kurs dataBase;
+    Kurs map;
+    Kurs fp;
+    Kurs algebra2;
+    KursRepository repoKurs;
 
+    /**
+     *  die Objekte instanziieren
+     */
+    void input()
+    {
+        pop = new Lehrer("Marcel", "Pop",1);
+        algebra = new Kurs("Algebra", pop, 1, 5);
+        dataBase = new Kurs("Baze de date", pop, 30, 26);
+        map = new Kurs("Map", pop, 100, 5);
+        fp = new Kurs("fp", pop, 35, 6);
+        algebra2 = new Kurs("Algebra", dancu, 10, 15);
+        dancu = new Lehrer("Ingrid","Dancu",2);
+
+        repoKurs = new KursRepository();
+
+    }
 
     @org.junit.jupiter.api.Test
-    @Description("Soll Kurse in dem repoListe hinzulegen, wenn das Kurs in der Liste ist --> Exception.")
+    @Description("Soll Kurse in dem repoListe hinzulegen.")
     void create() {
 
-        KursRepository repoKurs = new KursRepository();
-        Lehrer pop = new Lehrer("Marcel", "Pop",1);
-
-        Kurs algebra = new Kurs("Algebra", pop, 1, 5);
-        Kurs dataBase = new Kurs("Baze de date", pop, 30, 26);
-        Kurs map = new Kurs("Map", pop, 100, 5);
-        Kurs fp = new Kurs("fp", pop, 35, 6);
-
+        this.input();
         repoKurs.create(algebra);
         repoKurs.create(dataBase);
         repoKurs.create(map);
         repoKurs.create(fp);
 
         assertEquals(4, repoKurs.getAll().size());
+    }
+
+    @org.junit.jupiter.api.Test
+    @Description("Soll Kurse in dem repoListe hinzulegen, wenn das Kurs in der Liste ist --> Exception.")
+    void createException() {
+
+        this.input();
+        repoKurs.create(algebra);
+        repoKurs.create(dataBase);
+        repoKurs.create(map);
+        repoKurs.create(fp);
 
         try
         {
@@ -45,112 +73,110 @@ class KursRepositoryTest {
     }
 
     @org.junit.jupiter.api.Test
-    @Description("gibt mir die repoListe, wenn die Liste leer ist-->Exception")
-    void getAll() {
+    @Description("gibt die repoListe, wenn die Liste leer ist-->Exception")
+    void getAllListeLeer() {
 
-        KursRepository  repoKurs = new KursRepository();
-        try
-        {
+        this.input();
+        try {
             repoKurs.getAll();
-        }
-        catch (Exception e)
-        {
-            assert(true);
+        } catch (Exception e) {
+            assert (true);
         }
 
-        Lehrer pop = new Lehrer("Marcel", "Pop",1);
-        Kurs dataBase = new Kurs("Baze de date", pop, 30, 26);
-        Kurs map = new Kurs("Map", pop, 100, 5);
-        Kurs fp = new Kurs("fp", pop, 35, 6);
+    }
 
+    @org.junit.jupiter.api.Test
+    @Description("gibt die repoListe")
+    void getAll()
+    {
+        this.input();
         repoKurs.create(dataBase);
         repoKurs.create(map);
         repoKurs.create(fp);
 
         assertEquals(3, repoKurs.getAll().size());
-        System.out.println("Test getAll:\n" + repoKurs.getAll());
 
     }
 
     @org.junit.jupiter.api.Test
-    @Description("Ich habe 2 Ausnahmen, wenn die Liste leer ist und wenn das Kurs nicht in der Liste ist")
-    void delete() {
-        KursRepository repoKurs = new KursRepository();
-        Lehrer pop = new Lehrer("Marcel", "Pop",1);
+    @Description("wenn die Liste leer ist,kann man das Objekt nicht löschen")
+    void deleteLeereListe() {
+        this.input();
 
-        Kurs algebra = new Kurs("Algebra", pop, 1, 5);
-        Kurs dataBase = new Kurs("Baze de date", pop, 30, 26);
-        Kurs map = new Kurs("Map", pop, 100, 5);
-        Kurs fp = new Kurs("fp", pop, 35, 6);
-
-        try
-        {
+        try {
             repoKurs.delete(map);
-        }
-        catch(Exception e)
-        {
-            assert(true);
+        } catch (Exception e) {
+            assert (true);
         }
 
         //Assertions.assertThrows(IndexOutOfBoundsException.class, (Executable) repoKurs::delete(map));
+    }
+
+    @org.junit.jupiter.api.Test
+    @Description("Delete, wenn das Kurs nicht in der Liste ist")
+    void deleteObjektNichtIndDerListe() {
+        this.input();
 
         repoKurs.create(algebra);
         repoKurs.create(dataBase);
         repoKurs.create(map);
 
-        try
-        {
+        try {
             repoKurs.delete(fp);
+        } catch (Exception e) {
+            assert (true);
         }
-        catch(Exception e)
-        {
-            assert(true);
-        }
+    }
 
-        try
-        {
-            repoKurs.delete(map);
-            assert(true);
-        }
-        catch(Exception e)
-        {
-            assert(false);
-        }
+    @org.junit.jupiter.api.Test
+    @Description("Delete, wenn das Kurs in der Liste ist")
+    void deleteObjektIndDerListe() throws IllegalAccessException {
+        this.input();
+
+        repoKurs.create(algebra);
+        repoKurs.create(dataBase);
+        repoKurs.create(map);
+
+        repoKurs.delete(map);
 
         assertEquals(2, repoKurs.getAll().size());
     }
 
     @org.junit.jupiter.api.Test
-    @Description("Ich habe 2 Ausnahmen, wenn die Liste leer ist und wenn das Kurs nicht in der Liste ist")
-    void update() {
+    @Description("Ausnahmen, wenn die Liste leer ist, kann man den Objekt nicht andern")
+    void updateLeereListe() {
 
-        KursRepository repoKurs = new KursRepository();
-        Lehrer pop = new Lehrer("Marcel", "Pop",1);
-        Lehrer dancu = new Lehrer("Ingrid","Dancu",2);
+        this.input();
 
-        Kurs algebra = new Kurs("Algebra", pop, 1, 5);
-        Kurs algebra2 = new Kurs("Algebra", dancu, 10, 15);
-        Kurs fp = new Kurs("fp", pop, 35, 6);
-
-        try
-        {
+        try {
             repoKurs.update(algebra);
+        } catch (Exception e) {
+            assert (true);
         }
-        catch(Exception e)
-        {
-            assert(true);
-        }
+    }
 
+    @org.junit.jupiter.api.Test
+    @Description("das Kurs ist nicht in der Liste, kann man update nicht erledigen")
+    void updateObjektNichtInDerListe() {
+
+        this.input();
         repoKurs.create(algebra);
-        try
-        {
-            repoKurs.update(fp);
-        }
-        catch(Exception e)
-        {
-            assert(true);
-        }
 
+        try {
+            repoKurs.update(fp);
+        } catch (Exception e) {
+            assert (true);
+        }
+    }
+
+    @org.junit.jupiter.api.Test
+    @Description("das Kurs ist in der Liste, kann man update erledigen")
+    void UpdateObjektInDerListe()
+    {
+        this.input();
+        repoKurs.create(algebra);
+        repoKurs.create(dataBase);
+        repoKurs.create(map);
         try
         {
             repoKurs.update(algebra2);
@@ -160,7 +186,5 @@ class KursRepositoryTest {
         {
             assert(false);
         }
-
-        System.out.println("test update:\n" + repoKurs.getAll());
     }
 }

@@ -5,7 +5,7 @@ import Model.Lehrer;
 import Model.Student;
 import Repository.KursRepository;
 import Repository.LehrerRepository;
-import Repository.RegisterSchema;
+import Controller.RegisterSchema;
 import Repository.StudentRepository;
 
 public class Main {

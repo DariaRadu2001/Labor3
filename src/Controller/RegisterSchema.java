@@ -1,8 +1,11 @@
-package Repository;
+package Controller;
 
 import Model.Kurs;
 import Model.Lehrer;
 import Model.Student;
+import Repository.KursRepository;
+import Repository.LehrerRepository;
+import Repository.StudentRepository;
 
 import java.util.*;
 
@@ -27,7 +30,7 @@ public class RegisterSchema {
      */
     public boolean register(Kurs kurs, Student student)
     {
-        if(!kursRepo.repoList.contains(kurs))
+        if(!kursRepo.getAll().contains(kurs))
             return false;
 
         if(student.getAngeschriebeneKurse().contains(kurs))
@@ -56,7 +59,7 @@ public class RegisterSchema {
     public Map<Kurs, Integer> kurseFreiePlatzenUndAnzahl()
     {
         Map<Kurs, Integer> mapFreieKurse = new HashMap<>();
-        for(Kurs kurs : kursRepo.repoList)
+        for(Kurs kurs : kursRepo.getAll())
         {
             if(kurs.frei())
             {
@@ -73,7 +76,7 @@ public class RegisterSchema {
     public List<Kurs> kurseFreiePlatzen()
     {
         List<Kurs> freieKurse = new ArrayList<>();
-        for(Kurs kurs : kursRepo.repoList)
+        for(Kurs kurs : kursRepo.getAll())
         {
             if(kurs.frei())
             {
@@ -91,7 +94,7 @@ public class RegisterSchema {
     public List<Student> studentenAngemeldetBestimmtenKurs(Kurs kurs)
     {
         List<Student> studentenAngemeldet = new ArrayList<>();
-        for(Student student : studentenRepo.repoList)
+        for(Student student : studentenRepo.getAll())
         {
             List<Kurs> kurseStudent = student.getAngeschriebeneKurse();
             for(Kurs course : kurseStudent)
@@ -137,7 +140,7 @@ public class RegisterSchema {
 
             try{
                 Kurs finalKurs = kurs;
-                kurs = kursRepo.repoList.stream()
+                kurs = kursRepo.getAll().stream()
                         .filter(kurs2 -> finalKurs.getName() == nameKurs)
                         .findFirst()
                         .orElseThrow();
@@ -161,7 +164,7 @@ public class RegisterSchema {
             return false;
             //throw new IllegalArgumentException("Der Lehrer unterrichtet den Kurs nicht.");
         lehrer.loschenKurs(kurs);
-        for(Student student : studentenRepo.repoList)
+        for(Student student : studentenRepo.getAll())
         {
             if(student.getAngeschriebeneKurse().contains(kurs))
             {
@@ -172,28 +175,26 @@ public class RegisterSchema {
     }
 
     /**
-     * Ich andere die ECTS zu einem bestimmten Kurs.
+     * andert die ECTS zu einem bestimmten Kurs.
      * Ich andere der Anzahl den Krediten der Studenten, die bei dem Kurs teilnehmen
      * @param ECTS, neue ECTS
      * @param kurs, bei dem die ECTS andern will
      */
     public void andernECTS(int ECTS, Kurs kurs)
     {
-        if(kursRepo.repoList.contains(kurs))
+        if(kursRepo.getAll().contains(kurs))
         {
             int alteECTS = kurs.getECTS();
-            Kurs updateKurs = kurs;
-            updateKurs.setECTS(ECTS);
-            kursRepo.update(updateKurs);
+            kurs.setECTS(ECTS);
+            kursRepo.update(kurs);
 
-            for(Student student : studentenRepo.repoList)
+            for(Student student : studentenRepo.getAll())
             {
-                if(student.getAngeschriebeneKurse().contains(updateKurs))
+                if(student.getAngeschriebeneKurse().contains(kurs))
                 {
                     int neueAnzahlKredits = student.getTotalKredits() + (ECTS-alteECTS);
-                    Student updateStudent = student;
-                    updateStudent.setTotalKredits(neueAnzahlKredits);
-                    studentenRepo.update(updateStudent);
+                    student.setTotalKredits(neueAnzahlKredits);
+                    studentenRepo.update(student);
                 }
             }
 

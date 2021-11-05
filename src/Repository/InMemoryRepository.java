@@ -20,10 +20,10 @@ public abstract class InMemoryRepository<T> implements ICrudRepository<T> {
      * Ich lege ein Objekt in dem Repo hinzu. Wenn das Objekt in der Liste ist → Exception
      * @param obj
      * @return das Objekt das ich in dem repoListe hinzugefügt habe
-     * @throws IndexOutOfBoundsException
+     * @throws IllegalArgumentException
      */
     @Override
-    public T create(T obj) {
+    public T create(T obj) throws IllegalArgumentException {
         if(repoList.contains(obj))
             throw new IllegalArgumentException("Das Object ist in der Liste.");
 
