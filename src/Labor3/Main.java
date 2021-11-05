@@ -2,16 +2,11 @@ package Labor3;
 
 import Model.Kurs;
 import Model.Lehrer;
-import Model.Person;
 import Model.Student;
 import Repository.KursRepository;
 import Repository.LehrerRepository;
 import Repository.RegisterSchema;
 import Repository.StudentRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class Main {
 
