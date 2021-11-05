@@ -94,7 +94,7 @@ public class Student extends Person {
      * ich berechne wv. Kredite ein Student noch braucht bis er insgesamt 30 hat
      * @return Anzahl notwendigen Krediten
      */
-    public int notwendigeKredits()
+    public int getNotwendigeKredits()
     {
         return (30 - this.getTotalKredits());
     }

@@ -39,7 +39,7 @@ public class RegisterSchema {
         }
         else
         {
-            if((kurs.frei() && (student.notwendigeKredits() >= kurs.getECTS())))
+            if((kurs.istFrei() && (student.getNotwendigeKredits() >= kurs.getECTS())))
             {
                 student.enrolled(kurs);
                 kurs.addStudent(student);
@@ -61,9 +61,9 @@ public class RegisterSchema {
         Map<Kurs, Integer> mapFreieKurse = new HashMap<>();
         for(Kurs kurs : kursRepo.getAll())
         {
-            if(kurs.frei())
+            if(kurs.istFrei())
             {
-                mapFreieKurse.put(kurs,kurs.anzahlFreienPlatze());
+                mapFreieKurse.put(kurs,kurs.getAnzahlFreienPlatze());
             }
         }
         return mapFreieKurse;
@@ -78,7 +78,7 @@ public class RegisterSchema {
         List<Kurs> freieKurse = new ArrayList<>();
         for(Kurs kurs : kursRepo.getAll())
         {
-            if(kurs.frei())
+            if(kurs.istFrei())
             {
                 freieKurse.add(kurs);
             }

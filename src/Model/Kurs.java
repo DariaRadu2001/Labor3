@@ -71,7 +71,7 @@ public class Kurs {
      * ich untersuche, ob ein Kurs freie Platzen hat
      * @return true, wenn es noch Platzen gibt/ false, wenn es voll ist
      */
-    public boolean frei()
+    public boolean istFrei()
     {
         return this.getListeStudenten().size() < this.getMaximaleAnzahlStudenten();
     }
@@ -89,7 +89,7 @@ public class Kurs {
      * ich berechne der Anzahl den freien Platzen fur dem Kurs
      * @return Anzahl von freien Platzen
      */
-    public int anzahlFreienPlatze()
+    public int getAnzahlFreienPlatze()
     {
         return (this.getMaximaleAnzahlStudenten() - this.getListeStudenten().size());
     }
